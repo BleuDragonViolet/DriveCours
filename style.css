@@ -1,0 +1,205 @@
+/* 🌑 Fond sombre sobre */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #1a1b26;
+  color: #e2e8f0;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🏷️ Titre */
+header {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 1.2rem 1rem;
+  color: #a78bfa;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* 📦 Conteneur principal */
+.container {
+  flex: 1;
+  max-width: 1200px;
+  padding: 1rem;
+  margin: 0 auto; /* centre horizontalement */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centre le contenu */
+}
+
+/* 🔙 Retour */
+.back {
+  margin: 1rem 0;
+  cursor: pointer;
+  color: #7dd3fc;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.back:hover {
+  color: #38bdf8;
+}
+
+/* 📂 Grille des dossiers et fichiers */
+#list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  justify-items: center; /* centre chaque item */
+  align-items: start;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 📂 Dossier */
+.item {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.item:hover {
+  transform: translateY(-4px);
+}
+.item img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 0.5rem;
+}
+.filename {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  word-wrap: break-word;
+}
+
+/* 📑 Fichier (style carte) */
+.item.file {
+  width: 120px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s, background 0.2s;
+}
+.item.file:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.06);
+}
+.item.file img {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 6px;
+}
+.item.file .title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-height: 2.8em;
+  line-height: 1.4em;
+  overflow: hidden;
+}
+.item.file .subtitle {
+  font-size: 0.75rem;
+  color: #93c5fd;
+  text-align: center;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item.file .actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: auto;
+}
+.item.file .btn {
+  font-size: 0.7rem;
+  padding: 3px 6px;
+}
+
+/* Boutons */
+.btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  #list {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+  .item.file {
+    width: 100px;
+    padding: 8px;
+  }
+  .item img, .item.file img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Modal */
+.modal.hidden { display: none; }
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  background: #0f1724;
+  padding: 16px;
+  border-radius: 10px;
+  z-index: 1001;
+  color: #e6eef8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+.modal-close {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.modal-body {
+  margin-top: 8px;
+  max-height: 72vh;
+  overflow: auto;
+}
+.modal-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
