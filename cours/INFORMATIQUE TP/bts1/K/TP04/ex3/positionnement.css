@@ -1,0 +1,33 @@
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#cadreHautGauche {
+  background-color: brown;
+  width: 50%;
+  height: 50vh;
+  float: left; 
+}
+
+#cadreHautDroit {
+  background-color: yellow;
+  width: 50%;
+  height: 50vh;
+  float: left; 
+}
+
+#cadreBasGauche {
+  background-color: aquamarine;
+  width: 50%;
+  height: 50vh;
+  float: left; 
+}
+
+#cadreBasDroit {
+  background-color: pink;
+  width: 50%;
+  height: 50vh;
+  float: left; 
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title> Exemple de tableau </title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <table border=1">
+        <tr> <!-- début de la première ligne -->
+            <td colspan="2">Titre</td> <!-- première cellule étendue sur deux colonnes-->
+            <td> </td> <!-- cellule 2 à supprimer -->
+        </tr> <!-- fin de la première ligne -->
+        <tr> <!-- début de la deuxième ligne -->
+            <td>Paragraphe 1</td> <!-- première cellule-->
+            <td rowspan="2">Image</td> <!-- deuxième cellule étendue sur deux ligne-->
+        </tr> <!-- fin de la deuxième ligne -->
+        <tr> <!-- début de la troisième ligne -->
+            <td>Paragraphe 2</td> <!-- première cellule-->
+            <td> </td> <!-- cellule 6 à supprimer -->
+        </tr> <!-- fin de la troisième ligne -->
+    </table>
+</body>
+
+</html>

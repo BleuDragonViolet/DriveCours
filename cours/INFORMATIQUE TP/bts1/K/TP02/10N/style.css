@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at center, #0a0f0a 0%, #000 100%);
+    color: #d8ffd8;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* Image en haut */
+body>img {
+    margin-top: 20px;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+}
+
+
+h1 {
+    color: #7aff3a;
+    text-shadow: 0 0 10px #7aff3a, 0 0 20px #7aff3a;
+    margin: 20px 0;
+}
+
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.3);
+}
+
+td {
+    border: 1px solid rgba(122, 255, 58, 0.3);
+    padding: 15px 25px;
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #eaffea;
+    transition: all 0.3s ease;
+}
+
+td:first-child {
+    font-weight: bold;
+    color: #aaffaa;
+}
+
+/* Effet survol */
+td:hover {
+    background: rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) inset;
+}
+
+
+td img {
+    width: 80px;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.6));
+}
+
+/* Valeur principale avec effet  */
+table tr:nth-child(2) td:nth-child(2) {
+    color: #7aff3a;
+    font-weight: bold;
+    font-size: 22px;
+    text-shadow: 0 0 10px #7aff3a, 0 0 25px #7aff3a;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        text-shadow: 0 0 10px #7aff3a, 0 0 25px #7aff3a;
+    }
+
+    50% {
+        text-shadow: 0 0 20px #7aff3a, 0 0 45px #7aff3a;
+    }
+
+    100% {
+        text-shadow: 0 0 10px #7aff3a, 0 0 25px #7aff3a;
+    }
+}
+
+
+footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: rgba(200, 255, 200, 0.7);
+}

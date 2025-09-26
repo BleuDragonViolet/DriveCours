@@ -1,4 +1,4 @@
-/* script.js — version corrigée + aperçu modal */
+/* script.js — explorateur avec preview + auto-refresh */
 let fullTree = {};
 let currentPath = [];
 
@@ -7,10 +7,51 @@ function formatTitle(filename) {
   return filename.replace(/\.[^/.]+$/, "");
 }
 
+const TEXT_MAX_BYTES = 300 * 1024;
+const PRINTABLE_RATIO_THRESHOLD = 0.5;
+
 function buildFileUrl(pathArray, file) {
-  // Encode chaque segment pour gérer espaces / caractères spéciaux
   const segments = ["cours", ...pathArray, file].map(encodeURIComponent);
   return "/" + segments.join("/");
+}
+
+function extOf(filename) {
+  return filename.toLowerCase().split(".").pop() || "";
+}
+
+function createIconFor(file) {
+  const ext = extOf(file);
+  if (ext === "pdf") return "img/pdf.png";
+  if (ext === "html" || ext === "htm") return "img/html.png";
+  if (ext === "php") return "img/php.png";
+  if (ext === "css") return "img/css.png";
+  if (ext === "js") return "img/js.png";
+  if (["cpp", "c", "h"].includes(ext)) return "img/cpp.png";
+  if (["png", "jpg", "jpeg", "gif", "webp", "svg"].includes(ext)) return "img/image.png";
+  if (["txt", "md"].includes(ext)) return "img/txt.png";
+  if (["mp3", "wav", "ogg"].includes(ext)) return "img/song.png";
+  if (["mp4", "webm", "mov", "avi", "mkv"].includes(ext)) return "img/video.png";
+  return "img/file.png";
+}
+
+async function tryFetchAsText(url, maxBytes = TEXT_MAX_BYTES) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+    if (ct.startsWith("text/") || ct.includes("javascript") || ct.includes("json")) {
+      const text = await res.text();
+      return { ok: true, text };
+    }
+    const blob = await res.blob();
+    if (blob.size > maxBytes) return { ok: false, reason: "trop volumineux" };
+    const text = await blob.text();
+    const ratio = text.replace(/[^\x20-\x7E\r\n\t]/g, "").length / text.length;
+    if (ratio < PRINTABLE_RATIO_THRESHOLD) return { ok: false, reason: "contenu non lisible" };
+    return { ok: true, text };
+  } catch (err) {
+    return { ok: false, reason: err.message };
+  }
 }
 
 function isViewable(file) {
@@ -25,9 +66,13 @@ function isViewable(file) {
     ext.endsWith(".md") ||
     ext.endsWith(".html") ||
     ext.endsWith(".htm") ||
+    ext.endsWith(".php") ||
     ext.endsWith(".mp3") ||
     ext.endsWith(".mp4") ||
-    ext.endsWith(".wav")
+    ext.endsWith(".wav") ||
+    ext.endsWith(".css") ||
+    ext.endsWith(".js") ||
+    ext.endsWith(".cpp")
   );
 }
 
@@ -44,73 +89,61 @@ const modal = {
     this.title = document.getElementById("modalTitle");
     this.downloadBtn = document.getElementById("modalDownload");
     this.openBtn = document.getElementById("modalOpen");
-
     document.getElementById("modalClose").addEventListener("click", () => this.close());
     document.getElementById("modalOverlay").addEventListener("click", () => this.close());
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") this.close();
-    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") this.close(); });
   },
   async open(file, fileUrl) {
     this.title.textContent = formatTitle(file);
     this.body.innerHTML = "<p>Chargement…</p>";
-
-    // actions
     this.downloadBtn.href = fileUrl;
     this.downloadBtn.setAttribute("download", file);
     this.openBtn.onclick = () => window.open(fileUrl, "_blank");
 
-    // choisir le rendu selon extension
     const lower = file.toLowerCase();
     try {
       if (lower.endsWith(".pdf")) {
-        // iframe pour pdf
-        this.body.innerHTML = `<iframe src="${fileUrl}" frameborder="0" style="width:100%;height:70vh"></iframe>`;
+        this.body.innerHTML = `<iframe src="${fileUrl}" style="width:100%;height:70vh;border:0"></iframe>`;
       } else if (/\.(png|jpe?g|gif)$/i.test(lower)) {
-        this.body.innerHTML = `<div class="img-wrap"><img src="${fileUrl}" alt="${file}" style="max-width:100%;height:auto;display:block;margin:0 auto" /></div>`;
+        this.body.innerHTML = `<img src="${fileUrl}" alt="${file}" style="max-width:100%;height:auto;display:block;margin:0 auto" />`;
       } else if (lower.endsWith(".txt") || lower.endsWith(".md")) {
-        const res = await fetch(fileUrl);
-        const text = await res.text();
+        const res = await fetch(fileUrl); const text = await res.text();
         const pre = document.createElement("pre");
-        pre.textContent = text;
-        pre.style.whiteSpace = "pre-wrap";
-        pre.style.maxHeight = "60vh";
-        pre.style.overflow = "auto";
-        this.body.innerHTML = "";
-        this.body.appendChild(pre);
-      } else if (lower.endsWith(".html") || lower.endsWith(".htm")) {
-        // fetch then put in sandboxed iframe to avoid scripts running
-        const res = await fetch(fileUrl);
-        const html = await res.text();
+        pre.textContent = text; pre.style.whiteSpace = "pre-wrap";
+        pre.style.maxHeight = "60vh"; pre.style.overflow = "auto";
+        this.body.innerHTML = ""; this.body.appendChild(pre);
+      } else if (lower.endsWith(".html") || lower.endsWith(".htm") || lower.endsWith(".php")) {
         const iframe = document.createElement("iframe");
-        iframe.style.width = "100%";
-        iframe.style.height = "70vh";
-        // sandbox: no scripts, but allow same-origin so relative resources load only on same origin
-        iframe.setAttribute("sandbox", "allow-same-origin");
-        iframe.srcdoc = html;
-        this.body.innerHTML = "";
-        this.body.appendChild(iframe);
-      } else if (lower.endsWith(".mp3") || lower.endsWith(".wav")) {
+        iframe.style.width = "100%"; iframe.style.height = "70vh";
+        iframe.setAttribute("sandbox", "allow-same-origin allow-scripts allow-forms");
+        iframe.src = fileUrl;
+        this.body.innerHTML = ""; this.body.appendChild(iframe);
+      } else if (/\.(mp3|wav|ogg)$/i.test(lower)) {
         this.body.innerHTML = `<audio controls src="${fileUrl}" style="width:100%"></audio>`;
-      } else if (lower.endsWith(".mp4")) {
+      } else if (/\.(mp4|mkv|avi|mov|webm)$/i.test(lower)) {
         this.body.innerHTML = `<video controls src="${fileUrl}" style="width:100%;max-height:70vh"></video>`;
+      } else if (lower.endsWith(".css") || lower.endsWith(".js") || lower.endsWith(".cpp")) {
+        const attempt = await tryFetchAsText(fileUrl);
+        if (attempt.ok) {
+          const pre = document.createElement("pre");
+          pre.textContent = attempt.text; pre.style.whiteSpace = "pre-wrap";
+          pre.style.maxHeight = "60vh"; pre.style.overflow = "auto";
+          this.body.innerHTML = ""; this.body.appendChild(pre);
+        } else {
+          this.body.innerHTML = `<img src="${createIconFor(file)}" style="display:block;margin:0 auto;width:120px"><p style="text-align:center">Aperçu non disponible : ${attempt.reason}</p>`;
+        }
       } else {
-        // type non prévisualisable (docx, etc.)
         this.body.innerHTML = `<p>Aperçu non disponible pour ce type de fichier.</p>`;
       }
     } catch (err) {
-      this.body.innerHTML = `<p>Erreur lors du chargement : ${err.message}</p>`;
+      this.body.innerHTML = `<p>Erreur : ${err.message}</p>`;
     }
-
     this.el.classList.remove("hidden");
-    this.el.setAttribute("aria-hidden", "false");
   },
   close() {
     if (!this.el) return;
     this.body.innerHTML = "";
     this.el.classList.add("hidden");
-    this.el.setAttribute("aria-hidden", "true");
   }
 };
 
@@ -124,7 +157,7 @@ async function loadTree() {
   } catch (err) {
     console.error("Erreur fetch /api/cours :", err);
     const list = document.getElementById("list");
-    if (list) list.innerHTML = `<p class="error">Impossible de charger l'arborescence — as-tu lancé le serveur ? (voir console)</p>`;
+    if (list) list.innerHTML = `<p class="error">Impossible de charger l'arborescence</p>`;
   }
 }
 
@@ -137,25 +170,8 @@ function getNodeFromPath(path) {
   return node || {};
 }
 
-function createIconFor(file) {
-  const ext = file.toLowerCase();
-  if (ext.endsWith(".pdf")) return "img/pdf.png";
-  if (ext.endsWith(".html") || ext.endsWith(".htm")) return "img/html.png";
-  if (ext.endsWith(".doc") || ext.endsWith(".docx")) return "img/word.png";
-  if (/\.(png|jpe?g|gif|webp|svg)$/i.test(ext)) return "img/image.png";
-  if (ext.endsWith(".txt") || ext.endsWith(".md")) return "img/txt.png";
-  if (/\.(mp3|wav|ogg)$/i.test(ext)) return "img/song.png";     // 🎵 audio
-  if (/\.(mp4|mkv|avi|mov|webm)$/i.test(ext)) return "img/video.png"; // 🎬 vidéo
-  return "img/file.png"; // fallback générique
-}
-
-
 function render() {
-  if (!fullTree || Object.keys(fullTree).length === 0) {
-    console.warn("Arbre vide ou non chargé");
-    return;
-  }
-
+  if (!fullTree || Object.keys(fullTree).length === 0) return;
   const list = document.getElementById("list");
   const pathDiv = document.getElementById("path");
   list.innerHTML = "";
@@ -165,13 +181,9 @@ function render() {
     const back = document.createElement("div");
     back.className = "back";
     back.textContent = "⬅️ Retour";
-    back.onclick = () => {
-      currentPath.pop();
-      render();
-    };
+    back.onclick = () => { currentPath.pop(); render(); };
     pathDiv.appendChild(back);
 
-    // affichage chemin
     const crumb = document.createElement("span");
     crumb.className = "crumb";
     crumb.textContent = "/" + currentPath.join("/");
@@ -180,121 +192,73 @@ function render() {
 
   const node = getNodeFromPath(currentPath);
 
-  // dossiers
   for (const key in node) {
     if (key === "files") continue;
     const item = document.createElement("div");
     item.className = "item folder";
-
-    const icon = document.createElement("img");
-    icon.src = "img/dossier.png";
-    icon.alt = "dossier";
-    item.appendChild(icon);
-
-    const title = document.createElement("div");
-    title.className = "title";
-    title.textContent = key;
-    item.appendChild(title);
-
-    const subtitle = document.createElement("div");
-    subtitle.className = "subtitle";
-    subtitle.textContent = "dossier";
-    item.appendChild(subtitle);
-
-    item.onclick = () => {
-      currentPath.push(key);
-      render();
-    };
-
+    item.innerHTML = `<img src="img/dossier.png" alt="dossier"><div class="title">${key}</div><div class="subtitle">dossier</div>`;
+    item.onclick = () => { currentPath.push(key); render(); };
     list.appendChild(item);
   }
 
-  // --- fichiers ---
   if (node.files && node.files.length > 0) {
     node.files.forEach(file => {
+      const fileUrl = buildFileUrl(currentPath, file);
       const item = document.createElement("div");
       item.className = "item file";
-
-      const icon = document.createElement("img");
-      icon.src = createIconFor(file);
-      icon.alt = "fichier";
-      item.appendChild(icon);
-
-      const title = document.createElement("div");
-      title.className = "title";
-      title.textContent = formatTitle(file);
-      item.appendChild(title);
-
-      // sous-titre selon extension
-      const subtitle = document.createElement("div");
-      subtitle.className = "subtitle";
-      if (file.toLowerCase().endsWith(".pdf")) {
-        subtitle.textContent = "PDF";
-      } else if (file.toLowerCase().endsWith(".doc") || file.toLowerCase().endsWith(".docx")) {
-        subtitle.textContent = "Word";
-      } else if (/\.(png|jpe?g|gif)$/i.test(file)) {
-        subtitle.textContent = "Image";
-      } else if (file.toLowerCase().endsWith(".txt") || file.toLowerCase().endsWith(".md")) {
-        subtitle.textContent = "Texte";
-      } else if (/\.(mp3|wav)$/i.test(file)) {
-        subtitle.textContent = "Audio";
-      } else if (file.toLowerCase().endsWith(".mp4")) {
-        subtitle.textContent = "Vidéo";
-      } else {
-        subtitle.textContent = "Fichier";
-      }
-      item.appendChild(subtitle);
-
-      // actions (aperçu, ouvrir, télécharger)
-      const actions = document.createElement("div");
-      actions.className = "actions";
-
-      const fileUrl = buildFileUrl(currentPath, file);
+      item.innerHTML = `
+        <img src="${createIconFor(file)}" alt="fichier">
+        <div class="title">${formatTitle(file)}</div>
+        <div class="subtitle">${extOf(file).toUpperCase()}</div>
+        <div class="actions"></div>`;
+      const actions = item.querySelector(".actions");
 
       const viewBtn = document.createElement("button");
-      viewBtn.className = "btn";
-      viewBtn.textContent = "Aperçu";
+      viewBtn.className = "btn"; viewBtn.textContent = "Aperçu";
       if (isViewable(file)) {
-        viewBtn.onclick = (e) => {
-          e.stopPropagation();
-          modal.open(file, fileUrl);
-        };
-      } else {
-        viewBtn.disabled = true;
-        viewBtn.title = "Aperçu non disponible";
-      }
+        viewBtn.onclick = (e) => { e.stopPropagation(); modal.open(file, fileUrl); };
+      } else { viewBtn.disabled = true; }
       actions.appendChild(viewBtn);
 
       const openBtn = document.createElement("button");
-      openBtn.className = "btn";
-      openBtn.textContent = "Ouvrir";
-      openBtn.onclick = (e) => {
-        e.stopPropagation();
-        window.open(fileUrl, "_blank");
-      };
+      openBtn.className = "btn"; openBtn.textContent = "Ouvrir";
+      openBtn.onclick = (e) => { e.stopPropagation(); window.open(fileUrl, "_blank"); };
       actions.appendChild(openBtn);
 
       const dl = document.createElement("a");
-      dl.className = "btn";
-      dl.textContent = "Télécharger";
-      dl.href = fileUrl;
-      dl.setAttribute("download", file);
+      dl.className = "btn"; dl.textContent = "Télécharger";
+      dl.href = fileUrl; dl.setAttribute("download", file);
       dl.onclick = (e) => e.stopPropagation();
       actions.appendChild(dl);
 
-      item.appendChild(actions);
       list.appendChild(item);
     });
-  } else {
-    // si pas de fichiers et aucun dossier
-    if (Object.keys(node).length === 0) {
-      list.innerHTML = "<p>Aucun fichier dans ce dossier.</p>";
-    }
+  } else if (Object.keys(node).length === 0) {
+    list.innerHTML = "<p>Aucun fichier dans ce dossier.</p>";
   }
 }
 
+/* ---------------- auto-refresh ---------------- */
+let lastTree = "";
+async function refreshTree() {
+  try {
+    const res = await fetch("/api/cours");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const tree = await res.json();
+    const newTree = JSON.stringify(tree);
+    if (newTree !== lastTree) {
+      lastTree = newTree;
+      fullTree = tree;
+      render();
+    }
+  } catch (err) {
+    console.error("Erreur refresh:", err.message);
+  }
+}
+setInterval(refreshTree, 5000);
+
 /* ---------------- init ---------------- */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   modal.init();
-  loadTree();
+  await loadTree();
 });

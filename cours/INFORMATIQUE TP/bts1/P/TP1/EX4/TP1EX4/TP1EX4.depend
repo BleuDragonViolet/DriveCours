@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1756978020 source:c:\users\evan\desktop\2025-2026\informatique tp\payet\project\tp1\ex4\tp1ex4\main.cpp
+	<iostream>
+	<cstdlib>
+	<cmath>
+

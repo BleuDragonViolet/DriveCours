@@ -1,0 +1,14 @@
+p {
+    color: red;
+    /* Ceci est un commentaire sur une seule ligne */
+    text-align: center;
+}
+
+/* Ceci est un
+commentaire
+sur plusieurs lignes */
+
+#para1 {
+    text-align: center;
+    color: red;
+}
