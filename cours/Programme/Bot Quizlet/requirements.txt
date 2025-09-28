@@ -1,0 +1,11 @@
+# Installation des dépendances
+pip install pytesseract pygetwindow pyautogui keyboard PyQt5 Pillow
+
+# ⚠️ Installer aussi Tesseract-OCR (logiciel, pas que la lib Python) :
+# Télécharger ici : https://github.com/UB-Mannheim/tesseract/wiki
+# Puis mettre à jour le chemin dans OCR.py :
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+# Pour changer de quiz :
+# Remplacer le dictionnaire "correspondances = { ... }" dans quizlet_bot.py
+# par votre propre liste de mots (clé = mot à gauche, valeur = mot à droite).
