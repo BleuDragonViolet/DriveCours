@@ -1,0 +1,344 @@
+/* 
+    Created on : 11 oct. 2024, 16:40:01
+    Author     : KETTOU D
+*/
+
+html, body {
+    overflow: hidden;
+}
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/********** Page principale index.html *********/
+#entete {
+    /*A compléter*/
+    background-image: url('images/banniere.jpg');
+    background-size: 100% 100%;
+    width: 100%;
+    height: 22%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    background-repeat: no-repeat;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    align-items: center;
+    text-shadow: 5px 5px 5px blue;
+    text-align: center;
+}
+
+#fond {
+    /*A compléter*/
+    background-image: url(images/fond.jpg);
+    background-size: 100% 98%;
+    width: 100%;
+    height: 85%;
+    opacity: 0.4;
+    top: 22%;
+    left: 0%;
+    position: absolute;
+    background-repeat: no-repeat;
+}
+
+#photoVueBateau {
+    position: absolute;
+    left: 2%;
+    width: 30%;
+    height: 40%;
+    z-index: 10;
+    top: 40%;
+}
+
+
+
+.cadreCentral {
+    width: 75%;
+    height: 70%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: auto;
+    position: relative;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+    position: absolute;
+    top: 59%;
+    left: 20%;
+}
+
+/****** Affichage du menu dans index.html********/
+#menu {
+    top: 200px;
+    left: 30px;
+    width: 8%;
+    position: absolute;
+}
+
+#menu>li {
+    list-style: none;
+    width: auto;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #cca9dd;
+    /* mauve */
+    text-align: center;
+}
+
+#menu>li>ul {
+    list-style: none;
+    visibility: hidden;
+    position: absolute;
+    margin-top: 5px;
+    padding-left: 0;
+}
+
+#menu>li>ul>li {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #cca9dd;
+    padding: 3px;
+    width: 100%;
+    text-align: center;
+    margin-top: 3px;
+    margin-left: 50px;
+}
+
+#menu>li:hover {
+    /*A compléter*/
+    background-color: lightgreen;
+    width: auto;
+}
+
+#menu>li:hover ul {
+    /*A compléter*/
+    position: relative;
+    visibility: visible;
+    background-color: transparent;
+    ;
+    padding: 3px;
+
+}
+
+#menu>li>ul>li:hover {
+    /*A compléter*/
+
+    position: relative;
+    background-color: #d86a25;
+    padding: 3px;
+
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/*********** Fin Menu ********************/
+
+
+/***** Affichage image et tableau page accueil.html ******/
+#imagePlan {
+    position: relative;
+    margin-top: 20px;
+    left: 15px;
+}
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 60%;
+    position: absolute;
+    right: 5%;
+    top: 25%;
+    text-align: center;
+    font-size: small;
+
+}
+
+td,
+th {
+    border: 1px solid black;
+    vertical-align: middle;
+    width: 20%;
+    padding: 3px 6px;
+    text-align: left;
+    font-weight: normal;
+}
+
+/*** Images des drapeaux contenus dans le tableau ***/
+.imageDrapeau {
+    /*A compléter*/
+    max-width: 12%;
+    vertical-align: middle;
+}
+
+/***** Liste des comtés *****/
+#listeTab {
+    list-style-type: disclosure-closed;
+    text-align: left;
+    margin-left: 25px;
+    position: relative;
+    
+}
+
+/************ Pages html dans la fenêtre cadre central ************/
+.titre {
+    color: blue;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.texte {
+    /*A compléter*/
+    text-align: justify;
+    margin: 20px;
+    font-size: small;
+}
+
+#lien {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    display: block;
+    width: auto;
+    padding: 10px 20px;
+    color: blue;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Affichage image1(strawberryFields.jpg) et image2(imagine.jpg) page strawberryFields.html*/
+#image1StrawberryFields {
+    /*A compléter*/
+    background-image: url('images/strawberryFields.jpg');
+    background-size: 100% 100%;
+    width: 45%;
+    height: 60%;
+    left: 5%;
+    position: absolute;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+#image2StrawberryFields {
+    /*A compléter*/
+    background-image: url('images/imagine.jpg');
+    background-size: 100% 100%;
+    width: 45%;
+    height: 60%;
+    left: 52%;
+    position: absolute;
+    background-repeat: no-repeat;
+    display: block;
+
+
+
+
+
+
+
+}
+
+/* Affichage image(lePont.jpg) page centralParkLePont.html*
+#imageLePont{   /*A compléter*/
+/* Affichage image(lePont.jpg) page centralParkLePont.html */
+#imageLePont {
+    background-image: url('images/lePont.jpg'); 
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    height: 300px;
+    display: block;
+}
+
+
+
+/* image 1 à gauche */
+#image1Brooklyn {
+    background-image: url("images/pontBrooklyn.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 45%;
+    height: 350px;
+    position: absolute;
+    left: 4%;
+    display: inline-block;
+}
+
+/* image 2 à droite */
+#image2Brooklyn {
+    background-image: url("images/rueBrooklyn.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 45%;
+    height: 350px;
+    position: absolute;
+    right: 4%;
+    display: inline-block;
+}
+
+
+
+
+/* ---------- Statue de la Liberté (corrigé, images entières et alignées) ---------- */
+#image1StatueDeLaLiberte {
+    background-image: url("images/libertyIsland.jpg");
+    background-size: contain;       /* toute l’image visible */
+    background-repeat: no-repeat;
+    width: 42%;
+    height: 400px;
+    position: absolute;                    /* bien centrée entre le texte et le bas */
+    left: 4%;
+    display: inline-block;
+}
+
+#image2StatueDeLaLiberte {
+    background-image: url("images/statue1.jpg");
+    background-size: contain;       /* toute l’image visible */
+    background-repeat: no-repeat;
+    width: 25%;
+    height: 400px;
+    position: absolute;
+    left: 49%;
+    display: inline-block;
+}
+
+#image3StatueDeLaLiberte {
+    background-image: url("images/statue2.jpg");
+    background-size: contain;       /* toute l’image visible */
+    background-repeat: no-repeat;
+    width: 25%;
+    height: 400px;
+    position: absolute;
+    left: 75%;
+    display: inline-block;
+}
+
+
+
+
+
+
+/* Affichage image(vueSurManhattan.jpg) page vueSurManhattan.html*/
+#imageManhattan {
+    background-image: url('images/vueSurManhattan.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 60%;
+    height: 350px;
+    margin: 30px auto;
+}
