@@ -1,0 +1,69 @@
+
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- Compléter le titre de la page -->
+  <title>  Calculatrice </title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+  <!-- Faire l'inclusion du css et du script js -->
+
+  <!-- ***************************** -->
+
+</head>
+
+<body>
+  <header>
+    <h1> Calculatrice simple </h1>
+  </header>
+
+  <form name="calculatrice">
+
+    <!--Compléter l'entrée du formulaire correspondant à l'écran de la calculatrice. Affecter l'identité "ecran", entrée de type text, taille=15, longueur max=20 caractères, nom=result -->
+
+    <input type="text" name="result" id="ecran" size="15" maxlength="20" />
+
+    <!-- ***************************** -->
+    <table border="1">
+
+      <!-- tableau pour la calculatrice. Dans chaque cellule insérer les boutons comme indiqué dans l'énoncé du TP. Vous veillerez à ce que la bonne fonne fonction javascript soit appelée lors du clic sur chacun des boutons-->
+      <tr>
+        <td><input type="button" value="7" onclick="afficher('7')"></td>
+        <td><input type="button" value="8" onclick="afficher('8')"></td>
+        <td><input type="button" value="9" onclick="afficher('9')"></td>
+        <td><input type="button" value="+" onclick="afficher('+')"></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="4" onclick="afficher('4')"></td>
+        <td><input type="button" value="5" onclick="afficher('5')"></td>
+        <td><input type="button" value="6" onclick="afficher('6')"></td>
+        <td><input type="button" value="-" onclick="afficher('-')"></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="1" onclick="afficher('1')"></td>
+        <td><input type="button" value="2" onclick="afficher('2')"></td>
+        <td><input type="button" value="3" onclick="afficher('3')"></td>
+        <td><input type="button" value="*" onclick="afficher('*')"></td>
+      </tr>
+      <tr>
+        <td><input type="button" value="C" onclick="afficher('C')"></td>
+        <td><input type="button" value="0" onclick="afficher('0')"></td>
+        <td><input type="button" value="=" onclick="afficher('=')"></td>
+        <td><input type="button" value="/" onclick="afficher('/')"></td>
+      </tr>
+    </table>
+    <!-- ************************************************************ -->
+
+  </form>
+
+  <footer>
+    <p>BARREIROS Evan | 1BTS CIEL | 2025 | Lycée Christophe Colomb - Sucy en Brie</p>
+  </footer>
+
+  </SCRIPT>
+</body>
+
+</html>

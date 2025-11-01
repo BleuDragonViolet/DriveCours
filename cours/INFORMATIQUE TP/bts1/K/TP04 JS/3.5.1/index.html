@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function lighton() {
+            document.getElementById("monImage").src = "bulbon.gif"
+        }
+        function lightoff() {
+            document.getElementById("monImage").src = "bulboff.gif"
+        }
+    </script>
+</head>
+
+<body>
+    <img id="monImage" onmouseover="lighton()" onmouseout="lightoff()" src="bulboff.gif" width="100" height="180" />
+    <p>Survolez l'ampoule avec le curseur...</p>
+</body>
+
+</html>

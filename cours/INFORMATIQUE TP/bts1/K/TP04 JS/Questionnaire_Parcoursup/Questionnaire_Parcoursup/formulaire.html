@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- Compléter le titre de la page -->
+  <title> Voeux Parcoursup </title>
+
+
+  <!-- ***************************** -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Faire l'inclusion du css et du script js -->
+  <script src="script.js"></script>
+  <!-- ***************************** -->
+
+</head>
+
+<body>
+  <header>
+    <h3>Lycée Christophe Colomb</h3>
+    <h1>Mes 2 principaux voeux Parcoursup</h1>
+  </header>
+
+  <section id="formulaire">
+
+    <!-- Affecter au formulaire l'identité "orientation" -->
+    <form action="#" method="get" id="orientation">
+      <!-- ***************************** -->
+
+      <!-- Affecter à l'article l'identité "identite" et la classe "choix" -->
+      <article id="identite" class="choix">
+        <!-- ***************************** -->
+
+        <!-- Ecrire le code du formulaire de saisie de l'Identité
+            * Titre de niveau 2 : "Identité :"-->
+        <h2>Identité :</h2>
+        <!-- * paragraphe : "Indiquez vos nom et prenom"-->
+        <p>Indiquez vos nom et prenom</p>
+        <!--* paragraphe : "Prénom"-->
+        <p>Prénom</p>
+        <!--* champ de saisie de texte d’une ligne avec comme nom "prenom"-->
+        <input type="text" name="prenom" required>
+        <!--* paragraphe : "Nom"-->
+        <p>Nom</p>
+        <!--* champ de saisie de texte d’une ligne avec comme nom "nom" -->
+        <input type="text" name="nom" required>
+        <!-- ***************************** -->
+
+      </article>
+
+      <!-- Affecter à l'article l'identité "classe" et la classe "choix" -->
+      <article id="classe" class="choix">
+        <!-- ***************************** -->
+        <!-- Ecrire le code du formulaire de choix de la classe-->
+        <!--* Titre de niveau 2 : "Votre classe :"-->
+        <h2>Votre classe :</h2>
+        <!--* paragraphe : "En quelle classe êtes vous ?"-->
+        <p>En quelle classe êtes vous ?</p>
+        <!--* paragraphe : bouton radio avec comme nom "classe" et pour valeur "TSN" puis "Tale pro SN" -->
+        <p><input type="radio" class="classe" value="TSN" name="classe">Tale pro SN</p>
+        <!--* paragraphe : bouton radio avec comme nom "classe" et pour valeur "TSTI2D" puis "Tale STI2D"-->
+        <p><input type="radio" class="classe" value="TSTI2D" name="classe">Tale STI2</p>
+        <!--* paragraphe : bouton radio avec comme nom "classe" et pour valeur "TG" puis "Tale Générale" -->
+        <p><input type="radio" class="classe" value="TG" name="classe">Tale Générale</p>
+
+        <!-- ***************************** -->
+
+      </article>
+
+      <!-- Affecter à l'article l'identité "poursuite" et la classe "choix" -->
+      <article id="poursuite" class="choix">
+        <!-- ***************************** -->
+        <!-- Ecrire le code du formulaire de choix des spécialités-->
+        <!--* Titre de niveau 2 : "Orientations possibles après la terminale :"-->
+        <h2>Orientations possibles après la terminale :</h2>
+        <!--* paragraphe : "Choisissez vos deux voeux préférés"-->
+        <p>Choisissez vos deux voeux préférés</p>
+        <!--* paragraphe : case à cocher avec comme nom "BUT_GEII" et pour valeur "BUT GEII"-->
+        <p><input type="checkbox" name="BUT_GEII" value=" BUT GEII">BUT GEII</p>
+
+        <!--* paragraphe : case à cocher avec comme nom "BUT_RT" et pour valeur "BUT RT"-->
+        <p><input type="checkbox" name="BUT_RT" value=" BUT RT">BUT RT</p>
+        <!--* paragraphe : case à cocher avec comme nom "BUT_INFO" et pour valeur "BUT INFO"-->
+        <p><input type="checkbox" name="BUT_INFO" value=" BUT INFO">BUT INFO</p>
+        <!--* paragraphe : case à cocher avec comme nom "BTS_SIO" et pour valeur "BTS SIO"-->
+        <p><input type="checkbox" name="BTS_SIO" value="BTS SIO">BTS SIO</p>
+        <!--* paragraphe : case à cocher avec comme nom "BTS_CIEL_IR" et pour valeur "BTS CIEL.ER"-->
+        <p><input type="checkbox" name="BTS_CIEL_IR" value="BTS CIEL.ER">BTS CIEL.ER</p>
+        <!--* paragraphe : case à cocher avec comme nom "BTS_CIEL_ER" et pour valeur "BTS_CIEL_ER"-->
+        <p><input type="checkbox" name="BTS_CIEL_ER" value="BTS_CIEL_ER">BTS_CIEL_ER</p>
+        <!--* paragraphe : case à cocher avec comme nom "LICENCE" et pour valeur "LICENCE" -->
+        <p><input type="checkbox" name="LICENCE" value="LICENCE">LICENCE</p>
+        <!-- ***************************** -->
+
+      </article>
+
+      <article class="resultat">
+        <input class="button" type="submit" value="Voir le résultat!" />
+        <h1 id="resultat"></h1>
+        <p>Nom Prénom | classe | Année | Lycée Christophe Colomb - Sucy en Brie</p>
+      </article>
+
+    </form>
+  </section>
+</body>
+
+</html>

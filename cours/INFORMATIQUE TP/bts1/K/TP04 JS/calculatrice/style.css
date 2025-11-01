@@ -1,0 +1,111 @@
+body {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #007F00;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+/* Style du header
+    couleur de fond: noir
+    marges: 50px
+    rembourrage: 10px
+    coins arrondis de rayon: 20px
+    alignement du texte: centré
+*/
+
+header {
+    background-color: black;
+    margin: 50px;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+}
+
+/* Style Style de l'element d'ID ecran
+    taille police: 16px
+    alignement du text: à droite
+    bordure: 2px continue blanche
+    marges: 5px
+    coins arrondis de rayon: 0.25em
+    couleur de fond : #DEDEDE
+*/
+#ecran {
+    font-size: 16px;
+    text-align: right;
+    border: 2px solid white;
+    margin: 5px;
+    border-radius: 0.25em;
+    background-color: #DEDEDE;
+
+}
+
+/* Style du tableau
+    couleur de fond: #DEDEDE
+    bordure: 1px continue blanche
+    coins arrondis de rayon: 0.25em
+    marges: auto
+    alignement du texte: centré
+*/
+
+table {
+    background-color: #DEDEDE;
+    border: 1px solid white;
+    border-radius: 0.25em;
+    margin: auto;
+    text-align: center;
+
+}
+
+/* Style des cellule
+    style de bordure: double
+    bordure épaisseur: 1px
+    alignement du texte: centré
+*/
+
+td {
+    border-style: double;
+    border-width: 1px;
+    text-align: center;
+
+}
+
+/* Style du formulaire
+    couleur de fond: #bbb
+    bordure: 1px continue blanche
+    coins arrondis de rayon: 1em
+    marges: auto
+    rembourrage: 1em
+    largeur: 175px
+    alignement du texte: centré
+*/
+
+form {
+    background-color: #bbb;
+    border: 1px solid white;
+    border-radius: 1em;
+    margin: auto;
+    padding: 1em;
+    width: 175px;
+    text-align: center;
+
+}
+
+/* Style du pied de page
+    couleur de fond: noir
+    marge: 50px
+    rembourrage: 10px
+    coins arrondis de rayon: 20px
+    couleur du texte: blanc
+    alignement du texte: centré
+*/
+footer {
+    background-color: black;
+    margin: 50px;
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+
+}

@@ -1,0 +1,31 @@
+<script language="javascript">
+    // Initialisation de variables
+    var q1 = 0;
+    var q2 = 0;
+    // calcul
+    function calculer() {
+        score = q1 + q2;
+        alert("Votre score est de : " + score + "%")
+    }
+</script>
+<!-- la balise <hr> est affiché comme un trait horizontale par tous les
+principaux navigateurs-->
+<hr>
+<form>
+    <p>La capitale de la Suisse est :</p>
+    <ol>
+        <li><input type="radio" name="choice" value="1" onClick="q1=0">Genève</li>
+        <li><input type="radio" name="choice" value="2" onClick="q1=0">Zurich</li>
+        <li><input type="radio" name="choice" value="3" onClick="q1=50">Berne</li>
+    </ol>
+    <p>Le Pô se trouve en :</p>
+    <ol>
+        <li><input type="radio" name="choice2" value="1" onClick="q2=50">Italie</li>
+        Figure 6 Résultat obtenu
+        TP4 Javascript 15
+        <li><input type="radio" name="choice2" value="2" onClick="q2=0">Allemagne</li>
+        <li><input type="radio" name="choice2" value="3" onClick="q2=0">Espagne</li>
+    </ol>
+    <input type="button" name="ProcessButton" value="Voir le résultat!" onClick="calculer()">
+</form>
+<hr>

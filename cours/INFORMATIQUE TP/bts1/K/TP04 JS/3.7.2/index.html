@@ -1,0 +1,36 @@
+<script language="javascript">
+    function init() {
+        document.getElementById("quiz").onsubmit = calculer2;
+    }
+    function calculer2() {
+        // f est un raccourci qui évite de réécrire document.forms["quiz"]
+        var f = document.forms["quiz"];
+        // score = 0 au début
+        var score = 0;
+        for (var i = 0; i < (f.length); i++) {
+            // On boucle sur tous les éléments du formlaire
+            // Si l'élément est coché on ajoute sa valeur
+            if (f.elements[i].checked) {
+                score = score + parseInt(f.elements[i].value);
+            }
+        }
+        // Afficage du résultat
+        alert("Votre score est de : " + score + "%");
+    }
+    window.onload = init;
+</script>
+<form id="quiz" action="#" method="get"> <br />
+    <p>La capitale de la Suisse est :</p>
+    <ol>
+        <li><input type="radio" name="choice" value="0">Genève</li>
+        <li><input type="radio" name="choice" value="0">Zurich</li>
+        <li><input type="radio" name="choice" value="50">Berne</li>
+    </ol>
+    <p>Le Pô se trouve en :</p>
+    <ol>
+        <li><input type="radio" name="choice2" value="50">Italie</li>
+        <li><input type="radio" name="choice2" value="0">Allemagne</li>
+        <li><input type="radio" name="choice2" value="0">Espagne</li>
+    </ol>
+    <input type="submit" value="Voir le résultat!" />
+</form>

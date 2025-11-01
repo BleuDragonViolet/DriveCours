@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <p>Cliquez sur le bouton pour ouvrir une nouvelle fenètre</p>
+    <button onclick="myFunction()">Clique ici !</button>
+    <script>
+        function myFunction() {
+            var w = window.open();
+            w.document.open();
+            w.document.write("<h2>Coucou !</h2>");
+            w.document.close();
+        }
+    </script>
+</body>
+
+</html>
